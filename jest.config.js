@@ -12,7 +12,7 @@ const config = {
   // bail: 0,
 
   // The directory where Jest should store its cached dependency information
-  // cacheDirectory: "/tmp/jest_rs",
+  cacheDirectory: '/tmp/jest_rs',
 
   // Automatically clear mock calls, instances, contexts and results before every test
   // clearMocks: false,
@@ -143,7 +143,7 @@ const config = {
   // snapshotSerializers: [],
 
   // The test environment that will be used for testing
-  testEnvironment: "node",
+  testEnvironment: 'node',
 
   // Options that will be passed to the testEnvironment
   // testEnvironmentOptions: {},
@@ -172,7 +172,7 @@ const config = {
   // testRunner: "jest-circus/runner",
 
   // A map from regular expressions to paths to transformers
-  transform: {'.+\\.ts$': 'ts-jest'},
+  transform: { '.+\\.ts$': 'ts-jest' },
 
   // An array of regexp pattern strings that are matched against all source file paths, matched files will skip transformation
   // transformIgnorePatterns: [
