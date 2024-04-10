@@ -6,7 +6,16 @@
   "scripts": {
     "test": "jest",
     "lint": "eslint . --fix",
-    "prepare": "husky"
+    "prepare": "husky",
+    "lint-staged": "lint-staged"
+  },
+  "lint-staged": {
+    "*.js": [
+      "npm run lint"
+    ],
+    "*.ts": [
+      "npm run lint"
+    ]
   },
   "keywords": [],
   "author": "",
