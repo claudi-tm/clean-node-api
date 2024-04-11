@@ -1,3 +1,4 @@
+import { InvalidParamError } from '../errors/invalid-param-error'
 import { MissingParamError } from '../errors/missing-param-error'
 import { SignUpController } from './signup'
 
@@ -67,4 +68,20 @@ describe('SignUp Controller', () => {
       new MissingParamError('passwordConfirmation'),
     )
   })
+
+  // test('should Should return 400 if an invalid email is provided', () => {
+  //   const sut = makeSut()
+  //   console.log(sut)
+  //   const httpRequest = {
+  //     body: {
+  //       name: 'any_name',
+  //       email: 'any_email@gmail.com',
+  //       password: 'password',
+  //       passwordConfirmation: 'passwordConfirmation',
+  //     },
+  //   }
+  //   const httpResponse = sut.handle(httpRequest)
+  //   expect(httpResponse.statusCode).toBe(400)
+  //   expect(httpResponse.body).toEqual(new InvalidParamError('email'))
+  // })
 })
