@@ -4,11 +4,11 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "jest",
+    "test": "jest --passWithNoTests",
     "lint": "eslint . --fix",
     "prepare": "husky",
     "lint-staged": "lint-staged",
-    "test:staged": "jest"
+    "test:staged": "jest --passWithNoTests"
   },
   "lint-staged": {
     "*.js": [
