@@ -20,7 +20,6 @@ export class SignUpController implements Controller {
     }
 
     const isValid = this.emailValidator.isValid(httpRequest.body.email)
-    console.log(`Debugging: ${isValid}`)
 
     if (!isValid) {
       return badRequest(new InvalidParamError('email'))
