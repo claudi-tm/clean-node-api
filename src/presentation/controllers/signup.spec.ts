@@ -3,7 +3,14 @@ import { MissingParamError } from '../errors/missing-param-error'
 import { SignUpController } from './signup'
 
 const makeSut = (): SignUpController => {
+  class EmailValidatorStub {
+    isValid(email: string): boolean {
+      return true
+    }
+  }
   return new SignUpController()
+  // const emailValidatorStub = new EmailValidatorStub)
+  // return new SignUpController(emailValidatorStub)
 }
 
 describe('SignUp Controller', () => {
