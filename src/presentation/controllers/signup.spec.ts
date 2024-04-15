@@ -144,4 +144,24 @@ describe('SignUp Controller', () => {
     expect(httpResponse.statusCode).toBe(500)
     expect(httpResponse.body).toEqual(new ServerError())
   })
+
+  test('Should return 500 if email validator throws an exception using mocking', () => {
+    const { sut, emailValidatorStub } = makeSut()
+    const isValid = jest
+      .spyOn(emailValidatorStub, 'isValid')
+      .mockImplementation(() => {
+        throw new Error()
+      })
+    const httpRequest = {
+      body: {
+        name: 'any_name',
+        email: 'any_email@gmail.com',
+        password: 'password',
+        passwordConfirmation: 'passwordConfirmation',
+      },
+    }
+    const httpResponse = sut.handle(httpRequest)
+    expect(httpResponse.statusCode).toBe(500)
+    expect(httpResponse.body).toEqual(new ServerError())
+  })
 })
