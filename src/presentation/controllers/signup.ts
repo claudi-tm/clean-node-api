@@ -27,6 +27,7 @@ export class SignUpController implements Controller {
         'password',
         'passwordConfirmation',
       ]
+
       // Validacao de campos obrigatorios
       for (const field of requiredFields) {
         if (!httpRequest.body[field]) {
@@ -34,15 +35,17 @@ export class SignUpController implements Controller {
         }
       }
 
+      // Pegando os dados do http request
+      const { email, password, passwordConfirmation } = httpRequest.body
       // Validacao do email
-      const isValid = this.emailValidator.isValid(httpRequest.body.email)
+      const isValid = this.emailValidator.isValid(email)
       // const isValid = this.emailValidator.isValid('ccadcuarlos@gmail.com') false email to be checked on test
       if (!isValid) {
         return badRequest(new InvalidParamError('email'))
       }
 
       // Verificar se password e password confirmation forem iguais
-      if (httpRequest.body.password !== httpRequest.body.passwordConfirmation) {
+      if (password !== passwordConfirmation) {
         return badRequest(new InvalidParamError('passwordConfirmation'))
       }
 
