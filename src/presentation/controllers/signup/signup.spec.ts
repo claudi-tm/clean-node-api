@@ -168,17 +168,15 @@ describe('SignUp Controller', () => {
 
     test('Should return 500 if email validator throws an exception using mocking', () => {
       const { sut, emailValidatorStub } = makeSut()
-      const isValid = jest
-        .spyOn(emailValidatorStub, 'isValid')
-        .mockImplementationOnce(() => {
-          throw new Error()
-        })
+      jest.spyOn(emailValidatorStub, 'isValid').mockImplementationOnce(() => {
+        throw new Error()
+      })
       const httpRequest = {
         body: {
           name: 'any_name',
           email: 'any_email@gmail.com',
           password: 'password',
-          passwordConfirmation: 'passwordConfirmation',
+          passwordConfirmation: 'passwordd',
         },
       }
       const httpResponse = sut.handle(httpRequest)
@@ -206,44 +204,43 @@ describe('SignUp Controller', () => {
     })
   })
 
-  // describe('Test addAccount', () => {
-  //   test('Should call AddAccount with correct values', () => {
-  //     const { sut, addAccountStub } = makeSut()
-  //     const addSpy = jest.spyOn(addAccountStub, 'add') // peaga o valor de retorno do input
-  //     const httpRequest = {
-  //       body: {
-  //         name: 'any_name',
-  //         email: 'any_email@gmail.com',
-  //         password: 'password',
-  //         passwordConfirmation: 'password',
-  //       },
-  //     }
-  //     sut.handle(httpRequest)
-  //     expect(addSpy).toHaveBeenCalledWith({
-  //       // pega o valor enviado pelo request com o addSpy e verifica se ele é chamado como o objecto que abaixo
-  //       name: 'any_name',
-  //       email: 'any_email@gmail.com',
-  //       password: 'password',
-  //     })
-  //   })
-  //   test('Should first return 500 if addAccount throws an exception', () => {
-  //     const { sut, addAccountStub } = makeSut()
-  //     const isValid = jest
-  //       .spyOn(addAccountStub, 'add')
-  //       .mockImplementationOnce(() => {
-  //         throw new Error()
-  //       })
-  //     const httpRequest = {
-  //       body: {
-  //         name: 'any_name',
-  //         email: 'any_email@gmail.com',
-  //         password: 'password',
-  //         passwordConfirmation: 'passwordConfirmation',
-  //       },
-  //     }
-  //     const httpResponse = sut.handle(httpRequest)
-  //     expect(httpResponse.statusCode).toBe(500)
-  //     expect(httpResponse.body).toEqual(new ServerError())
-  //   })
-  // })
+  describe('Test addAccount', () => {
+    test('Should call AddAccount with correct values', () => {
+      const { sut, addAccountStub } = makeSut()
+      const addSpy = jest.spyOn(addAccountStub, 'add') // peaga o valor de retorno do input
+      const httpRequest = {
+        body: {
+          name: 'any_name',
+          email: 'any_email@gmail.com',
+          password: 'password',
+          passwordConfirmation: 'password',
+        },
+      }
+      sut.handle(httpRequest)
+      expect(addSpy).toHaveBeenCalledWith({
+        // pega o valor enviado pelo request com o addSpy e verifica se ele é chamado como o objecto que abaixo
+        name: 'any_name',
+        email: 'any_email@gmail.com',
+        password: 'password',
+      })
+    })
+
+    test('Should return 500 if addAccount throws an exception', () => {
+      const { sut, addAccountStub } = makeSut()
+      jest.spyOn(addAccountStub, 'add').mockImplementationOnce(() => {
+        throw new Error()
+      })
+      const httpRequest = {
+        body: {
+          name: 'any_name',
+          email: 'any_email@gmail.com',
+          password: 'password',
+          passwordConfirmation: 'password',
+        },
+      }
+      const httpResponse = sut.handle(httpRequest)
+      expect(httpResponse.statusCode).toBe(500)
+      expect(httpResponse.body).toEqual(new ServerError())
+    })
+  })
 })
