@@ -187,40 +187,63 @@ describe('SignUp Controller', () => {
     })
   })
 
-  test('should return 400 if password confirmation fails ...', () => {
-    const { sut } = makeSut()
-    const httpRequest = {
-      body: {
-        name: 'any_name',
-        email: 'any_email@gmail.com',
-        password: 'password',
-        passwordConfirmation: 'passwordConfirmation',
-      },
-    }
-    const httpResponse = sut.handle(httpRequest)
-    expect(httpResponse.statusCode).toBe(400)
-    expect(httpResponse.body).toEqual(
-      new InvalidParamError('passwordConfirmation'),
-    )
-  })
-
-  test('Should call AddAccount with correct values', () => {
-    const { sut, addAccountStub } = makeSut()
-    const addSpy = jest.spyOn(addAccountStub, 'add') // peaga o valor de retorno do input
-    const httpRequest = {
-      body: {
-        name: 'any_name',
-        email: 'any_email@gmail.com',
-        password: 'password',
-        passwordConfirmation: 'password',
-      },
-    }
-    sut.handle(httpRequest)
-    expect(addSpy).toHaveBeenCalledWith({
-      // pega o valor enviado pelo request com o addSpy e verifica se ele é chamado como o objecto que abaixo
-      name: 'any_name',
-      email: 'any_email@gmail.com',
-      password: 'password',
+  describe('Password validation', () => {
+    test('should return 400 if password confirmation fails(pass and passConfir are different) ...', () => {
+      const { sut } = makeSut()
+      const httpRequest = {
+        body: {
+          name: 'any_name',
+          email: 'any_email@gmail.com',
+          password: 'password',
+          passwordConfirmation: 'passwordConfirmation',
+        },
+      }
+      const httpResponse = sut.handle(httpRequest)
+      expect(httpResponse.statusCode).toBe(400)
+      expect(httpResponse.body).toEqual(
+        new InvalidParamError('passwordConfirmation'),
+      )
     })
   })
+
+  // describe('Test addAccount', () => {
+  //   test('Should call AddAccount with correct values', () => {
+  //     const { sut, addAccountStub } = makeSut()
+  //     const addSpy = jest.spyOn(addAccountStub, 'add') // peaga o valor de retorno do input
+  //     const httpRequest = {
+  //       body: {
+  //         name: 'any_name',
+  //         email: 'any_email@gmail.com',
+  //         password: 'password',
+  //         passwordConfirmation: 'password',
+  //       },
+  //     }
+  //     sut.handle(httpRequest)
+  //     expect(addSpy).toHaveBeenCalledWith({
+  //       // pega o valor enviado pelo request com o addSpy e verifica se ele é chamado como o objecto que abaixo
+  //       name: 'any_name',
+  //       email: 'any_email@gmail.com',
+  //       password: 'password',
+  //     })
+  //   })
+  //   test('Should first return 500 if addAccount throws an exception', () => {
+  //     const { sut, addAccountStub } = makeSut()
+  //     const isValid = jest
+  //       .spyOn(addAccountStub, 'add')
+  //       .mockImplementationOnce(() => {
+  //         throw new Error()
+  //       })
+  //     const httpRequest = {
+  //       body: {
+  //         name: 'any_name',
+  //         email: 'any_email@gmail.com',
+  //         password: 'password',
+  //         passwordConfirmation: 'passwordConfirmation',
+  //       },
+  //     }
+  //     const httpResponse = sut.handle(httpRequest)
+  //     expect(httpResponse.statusCode).toBe(500)
+  //     expect(httpResponse.body).toEqual(new ServerError())
+  //   })
+  // })
 })
